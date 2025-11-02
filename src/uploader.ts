@@ -4,6 +4,7 @@ import { glob } from 'glob'
 import { Semaphore } from 'semaphore-promise'
 import * as fs from 'node:fs/promises'
 import * as path from 'node:path'
+import * as core from '@actions/core'
 
 interface UploadTask {
   localFile: string
@@ -89,7 +90,10 @@ async function doUploadByForm (task: UploadTask, properties: UploadProperties): 
       params: {},
       checkCrc: true
     },
-    () => {}
+    () => {
+      core.info("上传成功："+task.remoteFile)
+      core.setOutput('url', "https://t539ke8g3.hb-bkt.clouddn.com/"+task.remoteFile)
+    }
   )
 }
 
@@ -105,7 +109,10 @@ async function doUploadByMultiparts (task: UploadTask, properties: UploadPropert
       partSize: properties.multipartUploadPartSize,
       version: 'v2'
     },
-    () => {}
+    () => {
+      core.info("上传成功："+task.remoteFile)
+      core.setOutput('url', "https://t539ke8g3.hb-bkt.clouddn.com/"+task.remoteFile)
+    }
   )
 }
 
