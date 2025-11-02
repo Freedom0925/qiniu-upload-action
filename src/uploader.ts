@@ -56,6 +56,8 @@ export async function uploadGlobs (inputs: Inputs, config: qiniu.conf.Config): P
     p
       .then(() => {
         restPromises.delete(p)
+        core.info("上传成功："+remoteFile)
+        core.setOutput('url', "https://t539ke8g3.hb-bkt.clouddn.com/"+remoteFile)
       })
       .catch(err => {
         if (error == null) {
